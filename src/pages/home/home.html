@@ -20,7 +20,7 @@
         </ion-card-content>
     </ion-card>
     <div [hidden]="dish || dishErrMess">
-        <ion-spinner></ion-spinner>
+        <ion-spinner icon="spiral" color="primary"></ion-spinner>
         <h4>Please wait...</h4>
     </div>
     <div *ngIf="dishErrMess">

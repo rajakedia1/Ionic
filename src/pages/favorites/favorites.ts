@@ -38,7 +38,7 @@ export class FavoritesPage implements OnInit{
         console.log('delete', id);
         let alert = this.alertCtrl.create({
             title: 'Confirm Title',
-            message: 'Do you wnat to delete Dish' + id,
+            message: 'Do you waat to delete Dish' + id,
             buttons: [
                 {text: 'Cancel', role: 'cancel',handler: () => {console.log('Cancelled')}},
                 {text: 'Delete', handler: () => {
@@ -59,6 +59,8 @@ export class FavoritesPage implements OnInit{
         });
         
         alert.present();
+        
+        
         
         item.close();
     }

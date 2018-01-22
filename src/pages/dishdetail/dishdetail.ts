@@ -1,10 +1,11 @@
 import { Component, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, ActionSheetController, ModalController } from 'ionic-angular';
 
 import { Dish } from '../../shared/dish';
 import { Comment } from '../../shared/comment';
 import { DishProvider } from '../../providers/dish/dish';
 import { FavoriteProvider } from '../../providers/favorite/favorite';
+import { CommentPage } from '../../pages/comment/comment';
 
 /**
  * Generated class for the DishdetailPage page.
@@ -28,7 +29,7 @@ export class DishdetailPage {
     
     
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              @Inject('BaseURL') private BaseURL, private favoriteservice: FavoriteProvider, private toastCtrl: ToastController ) {
+              @Inject('BaseURL') private BaseURL, private favoriteservice: FavoriteProvider, private toastCtrl: ToastController, private actionCtrl: ActionSheetController, public modalCtrl: ModalController ) {
       this.dish = navParams.get('dish');
       this.numcomments = this.dish.comments.length;
       this.favorite = favoriteservice.isFavorite(this.dish.id);
@@ -49,6 +50,50 @@ export class DishdetailPage {
             duration: 3000,
             position: 'middle'
         }).present();
-  }
+    }
+
+    openComment(){
+        let modal = this.modalCtrl.create(CommentPage);
+        modal.present();
+    }
+
+    actionSheet(){
+        console.log("yes");
+        let action = this.actionCtrl.create({
+            title: 'Choose Action',
+            buttons: [
+                {
+                    text: 'Add to Favorites',
+                    handler: () => {
+                        console.log('Adding to Favorites', this.dish.id);
+                        this.favorite = this.favoriteservice.addFavorite(this.dish.id);
+                            this.toastCtrl.create({
+                                message: 'Dish ' + this.dish.id + ' added successfully.',
+                                duration: 3000,
+                                position: 'middle'
+                            }).present();
+                    }
+
+                },
+                {
+                    text: 'Add Comments',
+                    handler: () => {
+                        //let navTransition = this.actionSheet.dismiss();
+                        ///navTransition.then(() => {
+                            this.openComment();
+                        //});
+                    }
+                },
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    handler: () => {
+                        console.log('Action Cancelled');
+                    }
+                }
+            ]
+        });
+        action.present();
+    }
 
 }

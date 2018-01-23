@@ -54,6 +54,12 @@ export class DishdetailPage {
 
     openComment(){
         let modal = this.modalCtrl.create(CommentPage);
+        modal.onDidDismiss(data => {
+            console.log('Hey');
+            console.log(data);
+            this.dish.comments.push(data);
+        });
+        
         modal.present();
     }
 

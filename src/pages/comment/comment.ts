@@ -15,7 +15,7 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 })
 export class CommentPage {
 
-    commentGroup: formGroup;
+    commentGroup: FormGroup;
     
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public viewCtrl: ViewController,

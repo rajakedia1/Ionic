@@ -40,7 +40,8 @@ export class CommentPage {
     
     onSubmit(){
         console.log(this.commentGroup.value);
-        this.viewCtrl.dismiss(this.commentGroup.value);
+        
+            this.viewCtrl.dismiss(this.commentGroup.value);
     }
 
 }

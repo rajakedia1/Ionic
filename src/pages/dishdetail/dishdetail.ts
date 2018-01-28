@@ -57,7 +57,7 @@ export class DishdetailPage {
         modal.onDidDismiss(data => {
             console.log('Hey');
             console.log(data);
-            if(this.data)
+            if(data)
                 this.dish.comments.push(data);
         });
         

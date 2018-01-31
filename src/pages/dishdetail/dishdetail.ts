@@ -6,12 +6,13 @@ import { Comment } from '../../shared/comment';
 import { DishProvider } from '../../providers/dish/dish';
 import { FavoriteProvider } from '../../providers/favorite/favorite';
 import { CommentPage } from '../../pages/comment/comment';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 /**
  * Generated class for the DishdetailPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
+ * Ionic pages and navigation. 
  */
 
 @IonicPage()
@@ -29,7 +30,7 @@ export class DishdetailPage {
     
     
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              @Inject('BaseURL') private BaseURL, private favoriteservice: FavoriteProvider, private toastCtrl: ToastController, private actionCtrl: ActionSheetController, public modalCtrl: ModalController ) {
+              @Inject('BaseURL') private BaseURL, private favoriteservice: FavoriteProvider, private toastCtrl: ToastController, private actionCtrl: ActionSheetController, public modalCtrl: ModalController, private socialSharing: SocialSharing ) {
       this.dish = navParams.get('dish');
       this.numcomments = this.dish.comments.length;
       this.favorite = favoriteservice.isFavorite(this.dish.id);
@@ -89,6 +90,26 @@ export class DishdetailPage {
                         ///navTransition.then(() => {
                             this.openComment();
                         //});
+                    }
+                },
+                {
+                    text: 'Share via Facebook',
+                    handler: () => {
+                        this.socialSharing.shareViaFacebook(
+                            this.dish.name + ' -- '+ this.dish.description,
+                            this.BaseURL + this.dish.image, ''
+                          ).then(() => console.log('Posted successfully'))
+                            .catch(() => console.log('Failed ton post'));
+                    }
+                },
+                {
+                    text: 'Share via Twitter',
+                    handler: () => {
+                        this.socialSharing.shareViaTwitter(
+                            this.dish.name + ' -- '+ this.dish.description,
+                            this.BaseURL + this.dish.image, ''
+                          ).then(() => console.log('Posted successfully'))
+                            .catch(() => console.log('Failed ton post'));
                     }
                 },
                 {
